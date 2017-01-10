@@ -1,0 +1,76 @@
+Dim suduty#   
+Dim sudutx#         
+Dim kecepatan# = 0.18 
+Dim tekstur#
+tekstur# = loadmipmaptexture("gambar.jpg")  
+
+glenable(gl_texture_2d)   
+
+while true  
+glclear(gl_color_buffer_bit or gl_depth_buffer_bit)  'bersihkan memori
+glloadidentity()
+gltranslatef(0,0,-5) 'translasi ke z -10
+glrotatef(suduty#,0,1,0) '(sudut,x,y,z)
+glrotatef(sudutx#,1,0,0)  
+
+glbindtexture(gl_texture_2d, tekstur#)
+glbegin(gl_triangles) 'depan    
+    gltexcoord2f(1,0)
+    glvertex3f(-1,-1,1)
+    gltexcoord2f(0,0)
+    glvertex3f(1,-1,1)
+    gltexcoord2f(0.5,1)
+    glvertex3f(0,1,0)
+glend()       
+
+glbegin(gl_triangles) 'belakang 
+    gltexcoord2f(1,0)   
+    glvertex3f(-1,-1,-1)
+    gltexcoord2f(0,0)
+    glvertex3f(1,-1,-1)
+    gltexcoord2f(0.5,1)
+    glvertex3f(0,1,0)
+glend()
+       
+glbegin(gl_triangles) 'kiri
+    gltexcoord2f(1,0)    
+    glvertex3f(-1,-1,1) 
+    gltexcoord2f(0,0)
+    glvertex3f(-1,-1,-1)
+    gltexcoord2f(0.5,1)
+    glvertex3f(0,1,0)
+glend()
+
+glbegin(gl_triangles) 'kanan 
+    gltexcoord2f(1,0)   
+    glvertex3f(1,-1,1) 
+    gltexcoord2f(0,0)
+    glvertex3f(1,-1,-1)
+    gltexcoord2f(0.5,1)
+    glvertex3f(0,1,0)
+glend()     
+
+glbegin(gl_quads) 'alas 
+    gltexcoord2f(0,1)
+    glvertex3f(-1,-1,1)
+    gltexcoord2f(1,1)
+    glvertex3f(1,-1,1)
+    gltexcoord2f(1,0)
+    glvertex3f(1,-1,-1)
+    gltexcoord2f(0,0)
+    glvertex3f(-1,-1,-1)
+glend()
+
+swapbuffers()
+
+if scankeydown(vk_right) then
+    suduty#=suduty#+kecepatan#
+elseif scankeydown(vk_left) then
+    suduty#=suduty#-kecepatan#
+elseif scankeydown(vk_up) then
+    sudutx#=sudutx#+kecepatan#
+elseif scankeydown(vk_down) then
+    sudutx#=sudutx#-kecepatan#
+endif    
+
+wend
